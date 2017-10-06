@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+
+    <script src="https://fb.me/react-0.14.3.js"></script>
+    <script src="https://fb.me/react-dom-0.14.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.js"></script>
+    <title>My React App</title>
+
+
+</head>
+<body>
+
+<div id="myId"></div>
+
+<script type="text/babel">
+
+
+
+
+    // Stateless Functional Component
+    //    const MyComponent = () => {
+    //        return <div>
+    //            <h1>{this.props.text}</h1>
+    //            <p>My React component</p>
+    //        </div>
+    //    }
+
+    //    var MyComponent = React.createClass({
+    //
+    //        render() {
+    //            return <div>
+    //                <h1>{this.props.text}</h1>
+    //                <p>My React component</p>
+    //            </div>
+    //        }
+    //    });
+
+
+    // ES6 Technique
+    class MyComponent extends React.Component {
+        render() {
+            return <div>
+                <h1>{this.props.text}</h1>
+                <p>{this.props.children}</p>
+            </div>
+        }
+    }
+
+    ReactDOM.render(
+            <div>
+                <MyComponent text="Hello W1">This is Msg one</MyComponent>
+                <MyComponent text="Hello W2">This is Msg two</MyComponent>
+                <MyComponent text="Hello W2">This is Msg three</MyComponent>
+            </div>,
+        document.getElementById('myId')
+    );
+
+</script>
+
+</body>
+</html>

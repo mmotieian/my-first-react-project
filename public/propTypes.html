@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+
+    <script src="https://fb.me/react-0.14.3.js"></script>
+    <script src="https://fb.me/react-dom-0.14.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Building the Note Book</title>
+
+
+</head>
+<body>
+
+<div id="myId"></div>
+
+<script type="text/babel">
+
+
+
+
+    var Board = React.createClass({
+
+        propTypes: {
+            count: function (props, propName) {
+                if(typeof props[propName] !== "number")
+                    return new Error("Count must be number");
+                if(props[propName] > 100) {
+                    return new Error("Number is > 100");
+                }
+            }
+        }
+        ,
+        getInitialState(){
+            return {
+                notes: [
+                    'Call Bob',
+                    'Email Sare',
+                    'Blah blah'
+                ]
+            }
+        }
+        ,
+        render() {
+            return (<div className="board">
+                {this.props.count}
+            </div>);
+        }
+    });
+
+    ReactDOM.render(<Board count={5}></Board>, document.getElementById('myId'));
+
+</script>
+
+</body>
+</html>
