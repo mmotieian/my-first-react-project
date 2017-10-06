@@ -15,26 +15,71 @@
 
 <script type="text/babel">
 
+    var Note = React.createClass({
 
+        getInitialState() {
+            return {editing: false};
+        }
+        ,
+        edit() {
+            this.setState({editing: true});
+
+        },
+        save() {
+            var val = this.refs.newText.value;
+            this.setState({editing: false});
+        }
+        ,
+        remove() {
+
+        },
+        renderForm() {
+            return (
+
+                    <div className="note">
+                        <textarea ref="newText"></textarea>
+                        <button onClick={this.save}>Save</button>
+                    </div>
+            );
+        }
+        ,
+        renderDisplay() {
+            return (
+                    <div className="note">
+                        <p>{this.props.children}</p>
+                        <span>
+                            <button onClick={this.edit}>Edit</button>
+                            <button onClick={this.remove}>Remove</button>
+                        </span>
+                    </div>
+            )
+        }
+        ,
+        render() {
+
+            return this.state.editing ? this.renderForm() : this.renderDisplay();
+        }
+    });
 
 
     var Board = React.createClass({
 
+
         propTypes: {
             count: function (props, propName) {
-                if(typeof props[propName] !== "number")
+                if (typeof props[propName] !== "number")
                     return new Error("Count must be number");
-                if(props[propName] > 100) {
+                if (props[propName] > 100) {
                     return new Error("Number is > 100");
                 }
             }
         }
         ,
-        getInitialState(){
+        getInitialState() {
             return {
                 notes: [
                     'Call Bob',
-                    'Email Sare',
+                    'Email Sarah',
                     'Blah blah'
                 ]
             }
@@ -42,7 +87,10 @@
         ,
         render() {
             return (<div className="board">
-                {this.props.count}
+                {this.state.notes.map((note, i) => {
+
+                    return (<Note key={i}>{note}</Note>)
+                } )}
             </div>);
         }
     });
