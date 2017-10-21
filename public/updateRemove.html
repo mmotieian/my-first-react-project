@@ -26,13 +26,13 @@
 
         },
         save() {
-            var val = this.refs.newText.value;
-//            alert(val);
-            this.setState({editing: false});
+            this.props.onChange(this.refs.newText.value, this.props.id);
+            this.setState({editing: false})
         }
         ,
         remove() {
-
+            this.props.onRemove(this.props.id);
+            this.setState({editing: false})
         },
         renderForm() {
             return (
@@ -79,19 +79,52 @@
         getInitialState() {
             return {
                 notes: [
-                    'Call Bob',
-                    'Email Sarah',
-                    'Blah blah'
+                    {id: 0, note: 'Call Bob'},
+                    {id: 1, note: 'Email Sarah'},
+                    {id: 2, note: 'Blah blah'}
                 ]
             }
         }
         ,
+        update(newText, id) {
+
+            var temp = [];
+            var notes = this.state.notes.map(
+                function (currentValue) {
+                    if (currentValue.id == id) {
+                        currentValue.note = newText;
+                    }
+                    temp.push(currentValue);
+                }
+            );
+
+            this.setState({temp});
+        }
+        ,
+        remove(id) {
+            var notes = this.state.notes.filter(function (currentValue) {
+                if (currentValue.id === id)
+                    return false;
+                return true;
+            });
+
+            this.setState({notes});
+        }
+        ,
+        eachNote(note) {
+            return (
+                    <Note key={note.id}
+                          id={note.id}
+                          onChange={this.update}
+                          onRemove={this.remove}>
+                        {note.note}
+                    </Note>
+            );
+        }
+        ,
         render() {
             return (<div className="board">
-                {this.state.notes.map((note, i) => {
-
-                    return (<Note key={i}>Hello</Note>)
-                })}
+                {this.state.notes.map(this.eachNote)}
             </div>);
         }
     });
